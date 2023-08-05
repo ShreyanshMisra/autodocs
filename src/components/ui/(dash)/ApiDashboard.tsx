@@ -29,7 +29,7 @@ const ApiDashboard = async ({}) => {
     },
   })
 
-  const serializableRequests = userRequests.map((req) => ({
+  const serializableRequests = userRequests.map((req: any) => ({
     ...req,
     timestamp: formatDistance(new Date(req.timestamp), new Date()),
   }))
