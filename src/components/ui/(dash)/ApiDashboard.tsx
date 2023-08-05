@@ -11,12 +11,16 @@ import Paragraph from "../Paragraph";
 import Table from "./Table";
 import { Input } from "./Input";
 
+interface ApiKey {
+  id: any;
+  enabled: boolean;
+}
 
 const ApiDashboard = async ({}) => {
   const user = await getServerSession(authOptions);
   if (!user) return notFound();
 
-  const apiKeys = await db.apiKey.findMany({
+  const apiKeys: ApiKey[] = await db.apiKey.findMany({
     where: { userId: user.user.id },
   });
 
@@ -42,8 +46,8 @@ const ApiDashboard = async ({}) => {
       <Masthead>Welcome back, {user.user.name}</Masthead>
       <div className="flex flex-col md:flex-row gap-4 justify-center md:justify-start items-center">
         <Paragraph>Your API key:</Paragraph>
-        <Input className="w-fit truncate" readOnly value={activeApiKey.key} />
-        <ApiKeyOptions apiKeyKey={activeApiKey.key} />
+        <Input className="w-fit truncate" readOnly value={activeApiKey?.toString()} />
+        <ApiKeyOptions apiKeyKey={activeApiKey?.toString()} />
       </div>
 
       <Paragraph className="text-center md:text-left mt-4 -mb-4">
